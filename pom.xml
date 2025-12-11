@@ -3,7 +3,7 @@
 
 	<groupId>de.ba.oiam</groupId>
 	<artifactId>bundid-simulator</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>OIAM-BundID-Simulator</name>
