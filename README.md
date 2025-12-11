@@ -1,5 +1,15 @@
 # BundID-Simulator
 
+## Note: This repo was moved
+
+We have transfered this repo to our new organisation `ba-itsys`.
+The location of the BundID-Simulator Docker image has been moved to `ghcr.io/ba-itsys/bundid-simulator`.
+
+```diff
+- ghcr.io/opdt/bundid-simulator:<tag>
++ ghcr.io/ba-itsys/bundid-simulator:<tag>
+```
+
 ## Übersicht
 
 > [!NOTE]
@@ -36,11 +46,11 @@ java -jar bundid-simulator.jar
 ```
 
 Eine zweite Variante besteht in der Nutzung eines Docker-Image, das 
-in der Github-Registry (siehe: https://github.com/opdt/bundid-simulator/pkgs/container/bundid-simulator) veröffentlicht wird.
+in der Github-Registry (siehe: https://github.com/ba-itsys/bundid-simulator/pkgs/container/bundid-simulator) veröffentlicht wird.
 
 ```
-docker pull ghcr.io/opdt/bundid-simulator:<tag>
-```    
+docker pull ghcr.io/ba-itsys/bundid-simulator:<tag>
+```
 
 User können das Image nutzen und in einem Kubernetes-Cluster mit angepasster Konfiguration deployen. Weitere Informationen
 zu diesem Thema später.
