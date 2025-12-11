@@ -3,7 +3,7 @@
 
 	<groupId>de.ba.oiam</groupId>
 	<artifactId>bundid-simulator</artifactId>
-	<version>1.1.0</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>OIAM-BundID-Simulator</name>
@@ -13,7 +13,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.4</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
