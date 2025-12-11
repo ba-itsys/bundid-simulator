@@ -1,23 +1,25 @@
-name: BuildOnBranches
+name: CI
+
 on:
   push:
     branches:
       - '**'
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch: { }
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout Repo
+      - uses: actions/checkout@v6
 
       - uses: docker/setup-buildx-action@v3
-        name: Setup Docker
 
       - uses: docker/build-push-action@v6
         name: Docker Build only
         with:
           push: false
-          tags: baopdt/bundid-simulator:${{ github.run_number }}
-
+          tags: ghcr.io/${{ github.repository }}:${{ github.run_number }}

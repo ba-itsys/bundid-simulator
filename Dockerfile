@@ -7,6 +7,8 @@ COPY pom.xml .
 COPY src ./src
 # Build the application using Maven
 RUN mvn clean package
+
+
 # Use an official OpenJDK image as the base image
 FROM eclipse-temurin:21-jre
 # Set the working directory in the container
