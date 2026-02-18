@@ -13,7 +13,7 @@
             <!-- Anzeige Personenliste als Radio-Group -->
             <div class="row row-cols-3 g-2">
                 <div class="col" th:each="user, iterStat: ${userlist}">
-                    <div class="card p-2">
+                    <div data-th-id="'userKachel_' + ${iterStat.count}" class="card p-2">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" data-th-value="${user.id}" data-th-field="*{userId}" name="r" id="id" data-th-id="'user_' + ${iterStat.count}">
                             <label class="form-check-label" for="id" data-th-for="'user_' + ${iterStat.count}">
