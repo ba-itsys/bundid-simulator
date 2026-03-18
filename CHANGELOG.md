@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.7...v1.0.8) (2026-03-18)
+
+
+### Bug Fixes
+
+* saml-ids must not start with digit ([#40](https://github.com/ba-itsys/bundid-simulator/issues/40)) ([174c986](https://github.com/ba-itsys/bundid-simulator/commit/174c986497d5b0f95aa23072797a8d9557fc4ac5))
+
 ## [1.0.7](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.6...v1.0.7) (2026-03-18)
 
 
