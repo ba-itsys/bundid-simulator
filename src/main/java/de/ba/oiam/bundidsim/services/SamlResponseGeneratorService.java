@@ -9,17 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
 public class SamlResponseGeneratorService {
+
+    private static final Duration SUBJECT_CONFIRMATION_VALIDITY = Duration.ofMinutes(5);
 
     @Value("classpath:views/saml_response_template.xml")
     private Resource fileResource;
@@ -45,9 +52,10 @@ public class SamlResponseGeneratorService {
     public String generateSamlResponse(Status samlStatus, BundIdUser user, SamlResponseValues params) {
 
         log.debug("start generateSamlResponse for status [{}]", samlStatus.getStatusType().name());
+        SamlResponseValues responseParams = enrichResponseParams(params);
 
         String renderedXmlTemplate = samlStatus.isStatusOK() ?
-                renderXmlTemplate(user, params) : renderXmlErrorTemplate(samlStatus, params);
+                renderXmlTemplate(user, responseParams) : renderXmlErrorTemplate(samlStatus, responseParams);
         log.debug("renderedXmlTemplate [{}]", renderedXmlTemplate);
 
         return Base64.getEncoder().encodeToString(renderedXmlTemplate.getBytes());
@@ -99,6 +107,45 @@ public class SamlResponseGeneratorService {
         myContext.setVariable("params", params);
 
         return templateEngine.process(xml, myContext);
+    }
+
+    private SamlResponseValues enrichResponseParams(SamlResponseValues params) {
+        Instant createdAt = params.getCreated() != null
+                ? params.getCreated()
+                : Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        String created = createdAt.toString();
+        String subjectConfirmationRecipient = StringUtils.hasText(params.getSubjectConfirmationRecipient())
+                ? params.getSubjectConfirmationRecipient()
+                : params.getAscUrl();
+        String subjectConfirmationNotOnOrAfter = StringUtils.hasText(params.getSubjectConfirmationNotOnOrAfter())
+                ? params.getSubjectConfirmationNotOnOrAfter()
+                : createdAt.plus(SUBJECT_CONFIRMATION_VALIDITY).toString();
+        String assertionId = StringUtils.hasText(params.getAssertionId())
+                ? params.getAssertionId()
+                : UUID.randomUUID().toString();
+        String authnInstant = StringUtils.hasText(params.getAuthnInstant())
+                ? params.getAuthnInstant()
+                : created;
+        String sessionNotOnOrAfter = StringUtils.hasText(params.getSessionNotOnOrAfter())
+                ? params.getSessionNotOnOrAfter()
+                : createdAt.plus(SUBJECT_CONFIRMATION_VALIDITY).toString();
+        String sessionIndex = StringUtils.hasText(params.getSessionIndex())
+                ? params.getSessionIndex()
+                : assertionId;
+        String nameId = StringUtils.hasText(params.getNameId())
+                ? params.getNameId()
+                : params.getUser();
+
+        return params.toBuilder()
+                .created(createdAt)
+                .assertionId(assertionId)
+                .nameId(nameId)
+                .authnInstant(authnInstant)
+                .sessionNotOnOrAfter(sessionNotOnOrAfter)
+                .sessionIndex(sessionIndex)
+                .subjectConfirmationRecipient(subjectConfirmationRecipient)
+                .subjectConfirmationNotOnOrAfter(subjectConfirmationNotOnOrAfter)
+                .build();
     }
 
     private SpringTemplateEngine createTemplateEngine() {

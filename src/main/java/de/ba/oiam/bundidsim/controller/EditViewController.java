@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 /**
@@ -145,11 +145,13 @@ public class EditViewController {
         SamlResponseValues responseParams =
                 SamlResponseValues.builder()
                         .id(UUID.randomUUID().toString())
+                        .assertionId(UUID.randomUUID().toString())
                         .requestId(requestParams.getId())
                         .spEntityId(requestParams.getIssuer())
                         .idpId(requestParams.getIssuer())
-                        .created(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                        .created(Instant.now().truncatedTo(ChronoUnit.SECONDS))
                         .ascUrl(requestParams.getAscUrl())
+                        .nameId(user != null ? user.getBpk2() : null)
                         .userAuthnLevel(authnLevel)
                         .build();
         log.debug("ResponseParams; [{}]", responseParams);

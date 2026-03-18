@@ -18,13 +18,18 @@ package de.ba.oiam.bundidsim.services;
 import de.ba.oiam.bundidsim.model.BundIdUser;
 import de.ba.oiam.bundidsim.model.SamlResponseValues;
 import de.ba.oiam.bundidsim.model.Status;
+import de.ba.oiam.bundidsim.utils.XmlParserTools;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.Base64;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,16 +45,18 @@ public class SamlResponseGeneratorServiceTest {
 
     @Test
     void buildSamlResponseTest() throws Exception {
+        Instant created = Instant.parse("2026-03-18T10:15:30Z");
 
         SamlResponseValues params = SamlResponseValues.builder()
                 .id(UUID.randomUUID().toString())
+                .assertionId(UUID.randomUUID().toString())
                 .requestId(UUID.randomUUID().toString())
                 .ascUrl("https://samltool-ewg.pre.buergerserviceportal.de/saml/SSO")
                 .userAuthnLevel("STORK-QAA-Level-4")
-                .created(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
-                .idpId("https://samltool-ewg.pre.buergerserviceportal.de")
+                .created(created)
+                .idpId("bundid-simulator")
                 .spEntityId("https://samltool-ewg.pre.buergerserviceportal.de")
-                .user(UUID.randomUUID().toString())     // hier die BPK2 des users
+                .nameId(UUID.randomUUID().toString())     // hier die BPK2 des users
                 .build();
 
         BundIdUser user = BundIdUser.builder()
@@ -65,9 +72,44 @@ public class SamlResponseGeneratorServiceTest {
                 .build();
 
         String samlResponse = service.generateSamlResponse(Status.buildOkStatus(), user, params);
+        String decodedSamlResponse =
+                new String(Base64.getDecoder().decode(samlResponse), StandardCharsets.UTF_8);
+        Document samlResponseDoc = XmlParserTools.parseXML(decodedSamlResponse);
+        Element subjectConfirmationData =
+                (Element) samlResponseDoc.getElementsByTagName("saml:SubjectConfirmationData").item(0);
+        Element assertion = (Element) samlResponseDoc.getElementsByTagName("saml:Assertion").item(0);
+        NodeList authnStatements = samlResponseDoc.getElementsByTagName("saml:AuthnStatement");
+        Element userLevelAuthnStatement = (Element) authnStatements.item(0);
+        Element passwordAuthnStatement = (Element) authnStatements.item(1);
+        Element nameId = (Element) samlResponseDoc.getElementsByTagName("saml:NameID").item(0);
+        Element userLevelAuthnContextClassRef =
+                (Element) userLevelAuthnStatement.getElementsByTagName("saml:AuthnContextClassRef").item(0);
+        Element passwordAuthnContextClassRef =
+                (Element) passwordAuthnStatement.getElementsByTagName("saml:AuthnContextClassRef").item(0);
 
         assertNotNull(samlResponse);
         assertThat(samlResponse).isNotBlank();
+        assertThat(subjectConfirmationData).isNotNull();
+        assertThat(subjectConfirmationData.getAttribute("Recipient")).isEqualTo(params.getAscUrl());
+        assertThat(subjectConfirmationData.getAttribute("NotOnOrAfter")).isEqualTo("2026-03-18T10:20:30Z");
+        assertThat(assertion).isNotNull();
+        assertThat(assertion.getAttribute("ID")).isEqualTo(params.getAssertionId());
+        assertThat(authnStatements.getLength()).isEqualTo(2);
+        assertThat(userLevelAuthnStatement).isNotNull();
+        assertThat(userLevelAuthnStatement.getAttribute("AuthnInstant")).isEqualTo(created.toString());
+        assertThat(userLevelAuthnStatement.getAttribute("SessionIndex")).isEqualTo(params.getAssertionId());
+        assertThat(userLevelAuthnStatement.hasAttribute("SessionNotOnOrAfter")).isFalse();
+        assertThat(userLevelAuthnContextClassRef.getTextContent()).isEqualTo(params.getUserAuthnLevel());
+        assertThat(passwordAuthnStatement).isNotNull();
+        assertThat(passwordAuthnStatement.getAttribute("AuthnInstant")).isEqualTo(created.toString());
+        assertThat(passwordAuthnStatement.getAttribute("SessionNotOnOrAfter")).isEqualTo("2026-03-18T10:20:30Z");
+        assertThat(passwordAuthnStatement.getAttribute("SessionIndex")).isEqualTo(params.getAssertionId());
+        assertThat(passwordAuthnContextClassRef.getTextContent())
+                .isEqualTo("urn:oasis:names:tc:SAML:2.0:ac:classes:Password");
+        assertThat(nameId).isNotNull();
+        assertThat(nameId.getTextContent()).isEqualTo(params.getNameId());
+        assertThat(decodedSamlResponse).doesNotContain("placeholder");
+        assertThat(decodedSamlResponse).contains("urn:oasis:names:tc:SAML:2.0:ac:classes:Password");
 
         log.debug("encoded SamlResponse [{}]", samlResponse);
     }

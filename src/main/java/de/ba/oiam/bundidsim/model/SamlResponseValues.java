@@ -17,18 +17,27 @@ package de.ba.oiam.bundidsim.model;
 
 import lombok.*;
 
+import java.time.Instant;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @ToString
 public class SamlResponseValues {
     private String id;
+    private String assertionId;
     private String requestId;
     private String spEntityId;
     private String idpId;
-    private String created;
+    private Instant created;
     private String ascUrl;
+    private String nameId;
+    private String authnInstant;
+    private String sessionNotOnOrAfter;
+    private String sessionIndex;
+    private String subjectConfirmationNotOnOrAfter;
+    private String subjectConfirmationRecipient;
     private String userAuthnLevel;
     private String user;
 }
