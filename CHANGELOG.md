@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.6...v1.0.7) (2026-03-18)
+
+
+### Bug Fixes
+
+* replace hardcoded values with correct dynamic ones ([#37](https://github.com/ba-itsys/bundid-simulator/issues/37)) ([a603a1a](https://github.com/ba-itsys/bundid-simulator/commit/a603a1a81b897bb3b0752154af733e6a9923d687))
+
 ## [1.0.6](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.5...v1.0.6) (2026-02-18)
 
 
