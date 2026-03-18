@@ -75,6 +75,7 @@ public class SamlResponseGeneratorServiceTest {
         String decodedSamlResponse =
                 new String(Base64.getDecoder().decode(samlResponse), StandardCharsets.UTF_8);
         Document samlResponseDoc = XmlParserTools.parseXML(decodedSamlResponse);
+        Element response = samlResponseDoc.getDocumentElement();
         Element subjectConfirmationData =
                 (Element) samlResponseDoc.getElementsByTagName("saml:SubjectConfirmationData").item(0);
         Element assertion = (Element) samlResponseDoc.getElementsByTagName("saml:Assertion").item(0);
@@ -89,21 +90,23 @@ public class SamlResponseGeneratorServiceTest {
 
         assertNotNull(samlResponse);
         assertThat(samlResponse).isNotBlank();
+        assertThat(response).isNotNull();
+        assertThat(response.getAttribute("ID")).isEqualTo("_" + params.getId());
         assertThat(subjectConfirmationData).isNotNull();
         assertThat(subjectConfirmationData.getAttribute("Recipient")).isEqualTo(params.getAscUrl());
         assertThat(subjectConfirmationData.getAttribute("NotOnOrAfter")).isEqualTo("2026-03-18T10:20:30Z");
         assertThat(assertion).isNotNull();
-        assertThat(assertion.getAttribute("ID")).isEqualTo(params.getAssertionId());
+        assertThat(assertion.getAttribute("ID")).isEqualTo("_" + params.getAssertionId());
         assertThat(authnStatements.getLength()).isEqualTo(2);
         assertThat(userLevelAuthnStatement).isNotNull();
         assertThat(userLevelAuthnStatement.getAttribute("AuthnInstant")).isEqualTo(created.toString());
-        assertThat(userLevelAuthnStatement.getAttribute("SessionIndex")).isEqualTo(params.getAssertionId());
+        assertThat(userLevelAuthnStatement.getAttribute("SessionIndex")).isEqualTo("_" + params.getAssertionId());
         assertThat(userLevelAuthnStatement.hasAttribute("SessionNotOnOrAfter")).isFalse();
         assertThat(userLevelAuthnContextClassRef.getTextContent()).isEqualTo(params.getUserAuthnLevel());
         assertThat(passwordAuthnStatement).isNotNull();
         assertThat(passwordAuthnStatement.getAttribute("AuthnInstant")).isEqualTo(created.toString());
         assertThat(passwordAuthnStatement.getAttribute("SessionNotOnOrAfter")).isEqualTo("2026-03-18T10:20:30Z");
-        assertThat(passwordAuthnStatement.getAttribute("SessionIndex")).isEqualTo(params.getAssertionId());
+        assertThat(passwordAuthnStatement.getAttribute("SessionIndex")).isEqualTo("_" + params.getAssertionId());
         assertThat(passwordAuthnContextClassRef.getTextContent())
                 .isEqualTo("urn:oasis:names:tc:SAML:2.0:ac:classes:Password");
         assertThat(nameId).isNotNull();

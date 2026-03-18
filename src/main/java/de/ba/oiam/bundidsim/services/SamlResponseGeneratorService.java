@@ -114,15 +114,14 @@ public class SamlResponseGeneratorService {
                 ? params.getCreated()
                 : Instant.now().truncatedTo(ChronoUnit.SECONDS);
         String created = createdAt.toString();
+        String responseId = normalizeSamlId(params.getId());
         String subjectConfirmationRecipient = StringUtils.hasText(params.getSubjectConfirmationRecipient())
                 ? params.getSubjectConfirmationRecipient()
                 : params.getAscUrl();
         String subjectConfirmationNotOnOrAfter = StringUtils.hasText(params.getSubjectConfirmationNotOnOrAfter())
                 ? params.getSubjectConfirmationNotOnOrAfter()
                 : createdAt.plus(SUBJECT_CONFIRMATION_VALIDITY).toString();
-        String assertionId = StringUtils.hasText(params.getAssertionId())
-                ? params.getAssertionId()
-                : UUID.randomUUID().toString();
+        String assertionId = normalizeSamlId(params.getAssertionId());
         String authnInstant = StringUtils.hasText(params.getAuthnInstant())
                 ? params.getAuthnInstant()
                 : created;
@@ -137,6 +136,7 @@ public class SamlResponseGeneratorService {
                 : params.getUser();
 
         return params.toBuilder()
+                .id(responseId)
                 .created(createdAt)
                 .assertionId(assertionId)
                 .nameId(nameId)
@@ -146,6 +146,13 @@ public class SamlResponseGeneratorService {
                 .subjectConfirmationRecipient(subjectConfirmationRecipient)
                 .subjectConfirmationNotOnOrAfter(subjectConfirmationNotOnOrAfter)
                 .build();
+    }
+
+    private String normalizeSamlId(String samlId) {
+        if (!StringUtils.hasText(samlId)) {
+            return "_" + UUID.randomUUID();
+        }
+        return samlId.startsWith("_") ? samlId : "_" + samlId;
     }
 
     private SpringTemplateEngine createTemplateEngine() {
