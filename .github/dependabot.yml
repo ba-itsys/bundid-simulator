@@ -12,3 +12,11 @@ updates:
     commit-message:
       prefix: "deps" # to trigger a new release (release-please)
       include: "scope"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
