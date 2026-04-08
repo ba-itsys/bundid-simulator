@@ -10,7 +10,7 @@ RUN mvn clean package
 
 
 # Use an official OpenJDK image as the base image
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:25-jre
 # Set the working directory in the container
 WORKDIR /app
 # Copy the built JAR file from the previous stage to the container
