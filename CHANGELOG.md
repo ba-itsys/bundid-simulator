@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.8...v1.0.9) (2026-07-10)
+
+
+### Bug Fixes
+
+* **UI:** List of eidas countries expanded ([#61](https://github.com/ba-itsys/bundid-simulator/issues/61)) ([d58e462](https://github.com/ba-itsys/bundid-simulator/commit/d58e46260179d19bdc3b8c0823b8987daed5ddff))
+
 ## [1.0.8](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.7...v1.0.8) (2026-03-18)
 
 
