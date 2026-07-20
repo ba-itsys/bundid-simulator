@@ -1,0 +1,9 @@
+# ── Deny everything by default ────────────────────────────────────────────────
+**
+
+# ── Allow only what the Maven build stage needs ───────────────────────────────
+# Project descriptor (dependency resolution + build config)
+!pom.xml
+
+# Main sources and resources
+!src/main/**
