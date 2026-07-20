@@ -1,0 +1,33 @@
+<samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns="urn:oasis:names:tc:SAML:2.0:assertion"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+                    AssertionConsumerServiceURL="https://secure.example.de/infra/auth/realms/BundID-Ident/broker/bundid/endpoint"
+                    AttributeConsumingServiceIndex="0"
+                    Destination="https://secure.example.de/infra/idpmock/saml"
+                    ForceAuthn="false" ID="ID_eb118b42-3b96-42de-849e-d23953cc6e6b"
+                    IssueInstant="2023-12-11T13:33:24.852Z"
+                    ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Version="2.0">
+    <saml:Issuer>https://secure.example.de/infra/auth/realms/BundID-Ident</saml:Issuer>
+    <samlp:Extensions>
+        <akdb:AuthenticationRequest xmlns:akdb="https://www.akdb.de/request/2018/09" Version="2">
+            <akdb:RequestedAttributes>
+                <akdb:RequestedAttribute Name="urn:oid:1.2.40.0.10.2.1.1.225599" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.25484.494450.10.1" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:1.2.40.0.10.2.1.1.261.94" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.7" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.16" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.25484.494450.2" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.4" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:1.3.6.1.5.5.7.9.2" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.17" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:0.9.2342.19200300.100.1.40" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:1.2.40.0.10.2.1.1.55" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.42" RequiredAttribute="false"/>
+                <akdb:RequestedAttribute Name="urn:oid:1.2.40.0.10.2.1.1.225566" RequiredAttribute="false"/>
+            </akdb:RequestedAttributes>
+        </akdb:AuthenticationRequest>
+    </samlp:Extensions>
+    <samlp:NameIDPolicy AllowCreate="false" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>
+    <samlp:RequestedAuthnContext Comparison="minimum">
+        <saml:AuthnContextClassRef>STORK-QAA-Level-3</saml:AuthnContextClassRef>
+    </samlp:RequestedAuthnContext>
+</samlp:AuthnRequest>
