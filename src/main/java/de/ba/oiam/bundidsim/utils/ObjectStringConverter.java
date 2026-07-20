@@ -15,11 +15,12 @@
  */
 package de.ba.oiam.bundidsim.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Base64;
 
@@ -38,9 +39,9 @@ public class ObjectStringConverter {
      * @return
      */
     @SneakyThrows
-    public static String serializeAndEncode(Object value){
+    public static String serializeAndEncode(Object value) {
         ObjectMapper mapper = new ObjectMapper();
-        String s =  mapper.writer().writeValueAsString(value);
+        String s = mapper.writer().writeValueAsString(value);
         return Base64.getEncoder().encodeToString(s.getBytes());
     }
 
