@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.Document;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
@@ -163,10 +164,10 @@ public class SamlController {
 
         SamlRequestValues samlRequestModel =
                 SamlRequestValues.builder()
-                        .id(doc.getDocumentElement().getAttribute("ID"))
-                        .issuer(XmlParserTools.findValueByTagname(doc, "saml:Issuer"))
-                        .reqAuthnLevel(XmlParserTools.findValueByTagname(doc, "samlp:RequestedAuthnContext"))
-                        .ascUrl(doc.getDocumentElement().getAttribute("AssertionConsumerServiceURL"))
+                        .id(id)
+                        .issuer(valueIssuer)
+                        .reqAuthnLevel(valueReqAutnLevel)
+                        .ascUrl(serviceUrl)
                         .relayState(state)
                         .build();
         log.debug("model samrequest: [{}]", samlRequestModel);

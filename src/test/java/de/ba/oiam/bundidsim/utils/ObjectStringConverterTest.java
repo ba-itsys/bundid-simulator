@@ -20,17 +20,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-public class ObjectStringConverterTest {
+class ObjectStringConverterTest {
 
 
     @Test
-    void serializeTest() throws Exception {
+    void serializeTest() {
 
         /*
         Objekt serialisieren
@@ -42,21 +41,19 @@ public class ObjectStringConverterTest {
                 .build();
 
         String result = ObjectStringConverter.serializeAndEncode(config);
-        Assertions.assertNotNull(result);
-        System.out.println(result);
+        assertThat(result).isNotNull();
         log.debug("Config encoded: [{}]", result);
     }
 
     @Test
-    void deserializeTest() throws Exception {
+    void deserializeTest() {
         ConfigClass config = ConfigClass.builder()
                 .param1("Parameter 1")
                 .param2("Parameter 2")
                 .build();
 
         String s = ObjectStringConverter.serializeAndEncode(config);
-        ConfigClass testConfig = ObjectStringConverter.DecodeAndDeserialize(s, ConfigClass.class);
-        Assertions.assertNotNull(testConfig);
+        ConfigClass testConfig = ObjectStringConverter.decodeAndDeserialize(s, ConfigClass.class);
         log.debug("Config: [{}]", testConfig);
 
         assertThat(testConfig.getParam1()).isEqualTo("Parameter 1");

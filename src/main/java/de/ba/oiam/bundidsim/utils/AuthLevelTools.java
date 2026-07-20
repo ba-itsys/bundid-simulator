@@ -78,36 +78,25 @@ public class AuthLevelTools {
         }
 
         switch (method) {
-            case IDENTIFICATION_BENUTZERKENNUNG -> {
-                return STORK_1;
-            }
             case IDENTIFICATION_EIDAS, IDENTIFICATION_EID, IDENTIFICATION_FINK -> {
                 return STORK_4;
             }
             case IDENTIFICATION_SMARTEID, IDENTIFICATION_ELSTER -> {
                 return STORK_3;
             }
+            case IDENTIFICATION_BENUTZERKENNUNG -> {
+                return STORK_1;
+            }
         }
         return STORK_1;
     }
 
     public static String getAuthnLevelByLoa(String loa) {
-        if (!StringUtils.hasText(loa)) {
-            return STORK_1;
-        }
-
-        switch (loa) {
-            case LOA_HIGH -> {
-                return STORK_4;
-            }
-            case LOA_SUBSTANTIAL -> {
-                return STORK_3;
-            }
-            case LOA_LOW -> {
-                return STORK_1;
-            }
-        }
-        return STORK_1;
+        return switch (loa) {
+            case LOA_HIGH -> STORK_4;
+            case LOA_SUBSTANTIAL -> STORK_3;
+            default -> STORK_1;
+        };
     }
 
 }

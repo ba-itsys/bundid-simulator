@@ -50,13 +50,13 @@ public class ObjectStringConverter {
      *
      * @param data
      * @param toValueType
-     * @return
      * @param <T>
+     * @return
      */
     @SneakyThrows
-    public static <T> T DecodeAndDeserialize(String data, Class<T> toValueType) {
+    public static <T> T decodeAndDeserialize(String data, Class<T> toValueType) {
         String s = new String(Base64.getDecoder().decode(data.getBytes()));
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.reader().readValue(s, toValueType);
+        return mapper.readValue(s, toValueType);
     }
 }

@@ -19,16 +19,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-public class ResourceUtilsTest {
+class ResourceUtilsTest {
 
     @Test
-    void shouldReadValidUtf8Resource() throws IOException {
+    void shouldReadValidUtf8Resource() {
         String expectedContent = "Test content";
         Resource resource = new ByteArrayResource(expectedContent.getBytes(StandardCharsets.UTF_8));
 

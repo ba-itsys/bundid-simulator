@@ -24,7 +24,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
 /**
- * SpringBoot Mainclass
+ * SpringBoot Main class
  */
 @SpringBootApplication
 @Slf4j
@@ -33,7 +33,7 @@ public class MainApplication {
     private final String appName;
     private final String appVersion;
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         new SpringApplicationBuilder()
                 .sources(MainApplication.class)
                 .run(args);

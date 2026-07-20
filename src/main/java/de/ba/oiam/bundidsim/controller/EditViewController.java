@@ -51,10 +51,6 @@ public class EditViewController {
 
     /**
      * Aus dem QuickSelectionView wird über den Button "Person bearbeiten" diese Methode aufgerufen.
-     *
-     * @param model
-     * @param formData
-     * @return
      */
     @PostMapping(path = "/edit")
     public String startEditView(Model model, @ModelAttribute("formdata") SelectFormData formData) {
@@ -64,7 +60,7 @@ public class EditViewController {
 
         BundIdUser user = userService.getUserById(userId);
         SamlRequestValues requestParams =
-                ObjectStringConverter.DecodeAndDeserialize(
+                ObjectStringConverter.decodeAndDeserialize(
                         formData.getSamlRequest(), SamlRequestValues.class);
 
         // Formmodel bereitstellen
@@ -91,7 +87,7 @@ public class EditViewController {
         log.debug("call submitEditView");
 
         SamlRequestValues requestParams =
-                ObjectStringConverter.DecodeAndDeserialize(
+                ObjectStringConverter.decodeAndDeserialize(
                         formData.getSamlRequest(), SamlRequestValues.class);
 
         if (bindingResult != null && bindingResult.hasErrors()) {
@@ -105,7 +101,7 @@ public class EditViewController {
         // Validierung OK, SAML-Response erstellen
         Status samlStatus = Status.createStatusFromKey(formData.getStatus());
         BundIdUser user = formData.getUser();
-        user = addDataToUser(user, formData);
+        addDataToUser(user, formData);
         log.debug("BundIdUser: [{}]", user);
         return prepareSamlResponse(model, formData.getSamlRequest(), samlStatus, user, user.getEidCitizenQaaLevel());
     }
@@ -123,7 +119,7 @@ public class EditViewController {
 
     // private Helper ****************************************************************************************************
 
-    private BundIdUser addDataToUser(BundIdUser user, EditFormData formData) {
+    private void addDataToUser(BundIdUser user, EditFormData formData) {
 
         // User-Daten vervollständigen
         user.setAssertionProvedBy(formData.getIdentifikationWith()); // Identifizierungsmittel
@@ -135,12 +131,11 @@ public class EditViewController {
             user.setEidasIssuingCountry(formData.getEidasCountry());
             user.setEidCitizenQaaLevel(AuthLevelTools.getAuthnLevelByLoa(formData.getEidasLoa()));
         }
-        return user;
     }
 
     private String prepareSamlResponse(Model model, String samlRequest, Status samlStatus, BundIdUser user, String authnLevel) {
 
-        SamlRequestValues requestParams = ObjectStringConverter.DecodeAndDeserialize(samlRequest, SamlRequestValues.class);
+        SamlRequestValues requestParams = ObjectStringConverter.decodeAndDeserialize(samlRequest, SamlRequestValues.class);
 
         SamlResponseValues responseParams =
                 SamlResponseValues.builder()

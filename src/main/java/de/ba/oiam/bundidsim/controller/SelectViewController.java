@@ -29,8 +29,6 @@ import java.util.UUID;
 /**
  * Schnellauswahl einer Person und Identifizierungsdaten.
  */
-
-/** */
 @Controller
 @Slf4j
 public class SelectViewController {
@@ -46,6 +44,7 @@ public class SelectViewController {
 
     /**
      * setzt den Form-Validator
+     *
      * @param dataBinder
      */
     @InitBinder("formdata")
@@ -72,7 +71,7 @@ public class SelectViewController {
         log.debug("call QuickSelectionView-Submit...");
         // Ursprünglichen SAML-Request wiederherstellen
         SamlRequestValues requestParams =
-                ObjectStringConverter.DecodeAndDeserialize(
+                ObjectStringConverter.decodeAndDeserialize(
                         formData.getSamlRequest(), SamlRequestValues.class);
         log.debug("call submitFormPage, SamlRequest: [{}]", requestParams);
         log.debug("Form Data [{}]", formData);
@@ -137,7 +136,7 @@ public class SelectViewController {
 
     private String prepareSamlResponse(Model model, String samlRequest, Status samlStatus, BundIdUser user, String authnLevel) {
 
-        SamlRequestValues requestParams = ObjectStringConverter.DecodeAndDeserialize(samlRequest, SamlRequestValues.class);
+        SamlRequestValues requestParams = ObjectStringConverter.decodeAndDeserialize(samlRequest, SamlRequestValues.class);
 
         SamlResponseValues responseParams =
                 SamlResponseValues.builder()
@@ -176,7 +175,7 @@ public class SelectViewController {
      * @return
      */
     private String changeMailAddress(String email, String context) {
-        String[] emailParts = email.split("[@]");
+        String[] emailParts = email.split("@");
         return emailParts[0] + context + "@" + emailParts[1];
     }
 }

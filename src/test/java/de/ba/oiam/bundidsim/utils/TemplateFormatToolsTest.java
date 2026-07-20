@@ -19,10 +19,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TemplateFormatToolsTest {
+class TemplateFormatToolsTest {
 
     @Test
-    public void formatDate_shouldConvertValidDateFormat() {
+    void formatDate_shouldConvertValidDateFormat() {
         // Arrange
         TemplateFormatTools formatTools = TemplateFormatTools.getInstance();
         String inputDate = "2023-12-25";
