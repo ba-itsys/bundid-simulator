@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head data-th-fragment="head">
     <title data-th-text="${@environment.getProperty('app.web.title')}">Title</title>
     <link rel="stylesheet" type="text/css" data-th-href="@{__${basepath}__/webjars/bootstrap/css/bootstrap.min.css}">
@@ -9,11 +9,9 @@
 <!-- ************************************************************************************** -->
 <nav class="navbar navbar-dark mb-4" data-th-fragment="navbar">
     <div class="container">
-        <!--
-        <a class="navbar-brand logoba" href="#"></a>
-        -->
         <span class="h1" data-th-text="${@environment.getProperty('app.web.title')}"></span>
-        <span class="ms-auto">Umgebung: <strong data-th-text="${@environment.getProperty('app.env')}">xxx</strong></span>
+        <span class="ms-auto">Umgebung: <strong
+                data-th-text="${@environment.getProperty('app.env')}">xxx</strong></span>
     </div>
 </nav>
 <!-- ************************************************************************************** -->
@@ -21,7 +19,8 @@
     <script src="" data-th-src="@{__${basepath}__/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <div class="container">
         <span class="h4" data-th-text="${@environment.getProperty('spring.application.name')}">bundid-simulator</span>
-        <span class="ms-3" style="color:#D9D3C7;" data-th-text="${@environment.getProperty('spring.application.version')}">0.0</span>
+        <span class="ms-3" style="color:#D9D3C7;"
+              data-th-text="${@environment.getProperty('spring.application.version')}">0.0</span>
     </div>
 </footer>
 </body>

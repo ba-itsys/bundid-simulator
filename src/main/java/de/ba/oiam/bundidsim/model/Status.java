@@ -15,7 +15,11 @@
  */
 package de.ba.oiam.bundidsim.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Repräsentiert den Saml-Status für den SamlResponse.
@@ -29,7 +33,7 @@ public class Status {
 
     public enum StatusType {
         OK, CANCEL, ERROR
-    };
+    }
 
     private StatusType statusType;
     private String majorCode;
@@ -66,14 +70,11 @@ public class Status {
     }
 
     public static Status createStatusFromKey(String key) {
-        switch (key) {
-            case "OK":
-                return buildOkStatus();
-            case "CANCEL":
-                return buildCancelStatus();
-            default:
-                return buildErrorStatus();
-        }
+        return switch (key) {
+            case "OK" -> buildOkStatus();
+            case "CANCEL" -> buildCancelStatus();
+            default -> buildErrorStatus();
+        };
     }
 
 }

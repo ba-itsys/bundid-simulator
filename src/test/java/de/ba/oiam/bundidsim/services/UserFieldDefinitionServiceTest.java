@@ -22,10 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(classes={UserFieldDefinitionService.class})
+@SpringBootTest(classes = {UserFieldDefinitionService.class})
 class UserFieldDefinitionServiceTest {
 
     @Autowired
@@ -34,13 +32,10 @@ class UserFieldDefinitionServiceTest {
     @Test
     void getFieldNodes() {
         List<UserFieldDefinitionService.FieldNode> nodes = service.getFieldNodes();
-
-        assertNotNull(nodes);
-        assertTrue(nodes.size()>0);
+        assertThat(nodes).hasSizeGreaterThan(0);
 
         // test first node
-        UserFieldDefinitionService.FieldNode node = nodes.get(0);
-        assertNotNull(node);
+        UserFieldDefinitionService.FieldNode node = nodes.getFirst();
 
         assertThat(node.getName()).isEqualTo("surname");
         assertThat(node.getAttributes().getName()).isEqualTo("urn:oid:2.5.4.4");

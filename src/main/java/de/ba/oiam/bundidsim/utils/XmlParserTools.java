@@ -29,6 +29,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * statische Hilfsroutinen zur Verarbeitung von XML-Dokumenten (SAML-Request)
@@ -49,7 +50,7 @@ public class XmlParserTools {
     public static Document parseXML(String xml) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-        Document doc = db.parse(new InputSource(new ByteArrayInputStream(xml.getBytes("UTF-8"))));
+        Document doc = db.parse(new InputSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))));
         doc.getDocumentElement().normalize();
         return doc;
     }
@@ -57,7 +58,7 @@ public class XmlParserTools {
     /**
      * sucht in eiem {@link Document} nach einem Tag und liefert den Textinhalt als String.
      *
-     * @param doc Xml-Document
+     * @param doc     Xml-Document
      * @param tagname
      * @return Textinhalt
      */
@@ -67,7 +68,7 @@ public class XmlParserTools {
             Node node = nodeList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 // do something with the current element
-                String nodeName = node.getNodeName().toString();
+                String nodeName = node.getNodeName();
                 if (nodeName.equalsIgnoreCase(tagname)) {
                     return node.getTextContent();
                 }

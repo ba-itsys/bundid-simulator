@@ -36,9 +36,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
-@SpringBootTest(classes={SamlResponseGeneratorService.class,
+@SpringBootTest(classes = {SamlResponseGeneratorService.class,
         UserFieldDefinitionService.class, UserAttributesService.class})
-public class SamlResponseGeneratorServiceTest {
+class SamlResponseGeneratorServiceTest {
 
     @Autowired
     private SamlResponseGeneratorService service;
@@ -111,8 +111,9 @@ public class SamlResponseGeneratorServiceTest {
                 .isEqualTo("urn:oasis:names:tc:SAML:2.0:ac:classes:Password");
         assertThat(nameId).isNotNull();
         assertThat(nameId.getTextContent()).isEqualTo(params.getNameId());
-        assertThat(decodedSamlResponse).doesNotContain("placeholder");
-        assertThat(decodedSamlResponse).contains("urn:oasis:names:tc:SAML:2.0:ac:classes:Password");
+        assertThat(decodedSamlResponse)
+                .doesNotContain("placeholder")
+                .contains("urn:oasis:names:tc:SAML:2.0:ac:classes:Password");
 
         log.debug("encoded SamlResponse [{}]", samlResponse);
     }

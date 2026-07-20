@@ -15,6 +15,7 @@
  */
 package de.ba.oiam.bundidsim.utils;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
@@ -30,14 +31,12 @@ public class TemplateFormatTools {
     private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
     private SimpleDateFormat sdf2 = new SimpleDateFormat("dd.mm.yyyy");
 
+    @Getter
     private static TemplateFormatTools instance = new TemplateFormatTools();
-
-    public static TemplateFormatTools getInstance() {
-        return instance;
-    }
 
     /**
      * konvertiert Date YYYY-MM-DD in DD.MM.YYYY für Darstellung
+     *
      * @param date
      * @return
      */
@@ -45,7 +44,7 @@ public class TemplateFormatTools {
         try {
             Date d = sdf1.parse(date);
             return sdf2.format(d);
-        } catch (ParseException e) {
+        } catch (ParseException _) {
             return "Datum";
         }
     }

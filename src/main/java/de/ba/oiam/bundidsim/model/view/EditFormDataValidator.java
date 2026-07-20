@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 @Component
 @Slf4j
-public class EditFormDataValidator implements Validator  {
+public class EditFormDataValidator implements Validator {
 
     private static final Pattern DATEPATTERN = Pattern.compile("(\\d{4}-(\\d{2}|xx)-(\\d{2}|xx))",
             Pattern.CASE_INSENSITIVE);
@@ -42,7 +42,7 @@ public class EditFormDataValidator implements Validator  {
     @Override
     public void validate(Object target, Errors errors) {
         log.debug("start validate EditFormData...");
-        EditFormData formData = (EditFormData)target;
+        EditFormData formData = (EditFormData) target;
 
         // Validierungen
         // Pflichtfelder in BundIdUser
@@ -97,11 +97,10 @@ public class EditFormDataValidator implements Validator  {
 
     private void validateBirthDate(EditFormData formData, Errors errors) {
         String birthdate = formData.getUser().getBirthdate();
-        if (StringUtils.hasText(birthdate)) {
-            if (!DATEPATTERN.matcher(birthdate).matches()) {
-                errors.rejectValue("user.birthdate", "");
-            }
+        if (StringUtils.hasText(birthdate) && !DATEPATTERN.matcher(birthdate).matches()) {
+            errors.rejectValue("user.birthdate", "");
         }
+
     }
 
     private void validateMandatoryFieldsForEid(EditFormData formData, Errors errors) {

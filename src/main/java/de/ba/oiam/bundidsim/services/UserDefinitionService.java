@@ -46,23 +46,16 @@ public class UserDefinitionService {
 
     Constructor constructor = new Constructor(UsersNode.class, new LoaderOptions());
     TypeDescription configDesc = new TypeDescription(UsersNode.class);
-    configDesc.putListPropertyType("users", BundIdUser.class);
+    configDesc.addPropertyParameters("users", BundIdUser.class);
     constructor.addTypeDescription(configDesc);
 
     Yaml yaml = new Yaml(constructor);
     UsersNode nodes = yaml.load(ResourceUtils.loadResourceToString(fileResource));
     List<BundIdUser> userList = nodes.getUsers();
     // Sortieren nach "id".
-    Collections.sort(
-        userList,
-        new Comparator<BundIdUser>() {
-          @Override
-          public int compare(BundIdUser data1, BundIdUser data2) {
-            return data1.getId().compareTo(data2.getId());
-          }
-        });
+    userList.sort(Comparator.comparing(BundIdUser::getId));
 
-    log.debug("{} users from resource readed.", userList.size());
+    log.debug("{} users from resource read.", userList.size());
     return userList;
   }
 

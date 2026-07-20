@@ -23,27 +23,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes={UserDefinitionService.class})
-public class UserDefinitionTest {
+@SpringBootTest(classes = {UserDefinitionService.class})
+class UserDefinitionTest {
 
-   @Autowired
-   private UserDefinitionService service;
-
+    @Autowired
+    private UserDefinitionService service;
 
     @Test
     void readUserList() {
         List<BundIdUser> list = service.getUserList();
-        assertNotNull(list);
-        assertTrue(list.size()>0);
+        assertThat(list).hasSizeGreaterThan(0);
     }
 
     @Test
     void readUserMap() {
         Map<String, BundIdUser> map = service.getUserMap();
-        assertNotNull(map);
-        assertTrue(map.size() > 0);
+        assertThat(map).hasSizeGreaterThan(0);
     }
 }
