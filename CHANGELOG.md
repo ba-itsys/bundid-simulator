@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.10...v1.1.0) (2026-07-21)
+
+
+### Features
+
+* upgrade to SpringBoot 4.1.0 and Java 25 ([fcf151e](https://github.com/ba-itsys/bundid-simulator/commit/fcf151ed467dd78923ea16be7fd01356794de526))
+
+
+### Bug Fixes
+
+* **build:** configure Maven compiler plugin with Lombok annotationProcessing ([eecd038](https://github.com/ba-itsys/bundid-simulator/commit/eecd03814f18b5cff9ede3d0b55c922743a3b806))
+
 ## [1.0.10](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.9...v1.0.10) (2026-07-10)
 
 
