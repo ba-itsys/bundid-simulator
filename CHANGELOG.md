@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.0...v1.1.1) (2026-07-22)
+
+
+### Dependencies
+
+* **deps:** bump org.webjars:webjars-locator-lite from 1.1.3 to 1.1.4 ([9e96d31](https://github.com/ba-itsys/bundid-simulator/commit/9e96d3144df9acf00c94941402a99496e729c97d))
+
 ## [1.1.0](https://github.com/ba-itsys/bundid-simulator/compare/v1.0.10...v1.1.0) (2026-07-21)
 
 
