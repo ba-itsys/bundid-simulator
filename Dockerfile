@@ -1,5 +1,5 @@
 # Use an official Maven image as the base image
-FROM maven:3.9.16-eclipse-temurin-25 AS build
+FROM maven:3-eclipse-temurin-24 AS build
 # Set the working directory in the container
 WORKDIR /app
 # Copy the pom.xml and the project files to the container
