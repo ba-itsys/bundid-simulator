@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.1...v1.1.2) (2026-08-12)
+
+
+### Bug Fixes
+
+* add DE in countrylist in editview ([#75](https://github.com/ba-itsys/bundid-simulator/issues/75)) ([eb7badf](https://github.com/ba-itsys/bundid-simulator/commit/eb7badff0c6fcfae79e7eb446588aa191341b443))
+
 ## [1.1.1](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.0...v1.1.1) (2026-07-22)
 
 
