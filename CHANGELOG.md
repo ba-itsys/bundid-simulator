@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.3](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.2...v1.1.3) (2026-08-27)
+
+
+### Dependencies
+
+* **deps:** bump commons-validator:commons-validator ([8064d8b](https://github.com/ba-itsys/bundid-simulator/commit/8064d8b759663bf07744a2a73981917262f9e957))
+* **deps:** bump org.springframework.boot:spring-boot-starter-parent ([2b49977](https://github.com/ba-itsys/bundid-simulator/commit/2b4997764129af94425ede2d4176c401cc33fbdf))
+
 ## [1.1.2](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.1...v1.1.2) (2026-08-12)
 
 
