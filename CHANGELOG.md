@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.3...v1.1.4) (2026-09-10)
+
+
+### Dependencies
+
+* **deps:** bump org.yaml:snakeyaml from 2.6 to 2.7 ([d798224](https://github.com/ba-itsys/bundid-simulator/commit/d798224beed280aa225c0720c56293ee09c756f6))
+
 ## [1.1.3](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.2...v1.1.3) (2026-08-27)
 
 
