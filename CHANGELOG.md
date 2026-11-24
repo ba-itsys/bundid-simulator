@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.6...v1.1.7) (2026-11-24)
+
+
+### Dependencies
+
+* **deps:** bump org.springframework.boot:spring-boot-starter-parent ([7c7d387](https://github.com/ba-itsys/bundid-simulator/commit/7c7d38744935d73de282444b98c4a2db0960a252))
+
 ## [1.1.6](https://github.com/ba-itsys/bundid-simulator/compare/v1.1.5...v1.1.6) (2026-10-30)
 
 
